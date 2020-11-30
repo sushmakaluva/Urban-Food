@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 export default function Heading() {
 
@@ -6,20 +6,23 @@ export default function Heading() {
     color: "white",
     fontWeight: "bold",
     alignText: "center",
-    fontSize: "80px",
-    
+    fontSize: "500%",
+    margin: "20px",
+    marginTop: "50px",
   };
 
-  const subHeadingStyle={
+  const subHeadingStyle = {
     color: "white",
-    fontSize: "50px",
-    fontWeight:"lighter"
+    fontSize: "250%",
+    fontWeight: "lighter",
+    margin: "20px",
+    alignText: "center",
   };
 
   return (
     <div>
       <h1 style={headingStyle}>Urban Food</h1>
-      <h2 style={subHeadingStyle}>Discover the best food & drinks in Toronto, ON</h2>
+      <h3 style={subHeadingStyle}>Discover the best food & drinks in Toronto, ON</h3>
     </div>
   )
 }

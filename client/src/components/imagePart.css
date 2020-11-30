@@ -1,0 +1,9 @@
+.container-class {
+  background-image: url("../images/download.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-x: 100%;
+  background-position-y: 90%;
+  transition: all 1.4s ease 0s;
+  
+}
