@@ -1,19 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import axios from "axios";
 // import Grid from '@material-ui/core/Grid';
 import RestauCard from './RestauCard';
+import { CityContext } from "../utils/CityContext";
 
 export default function LocalRestaurants() {
 
   const [coordinates, setCoordinates] = useState({ latitude: "", longitude: "" });
   const [localRestaurants, setLocalRestaurants] = useState([]);
+  const { cityDetails } = useContext(CityContext);
+  const { city_id} = cityDetails;
 
   useEffect(() => {
     // getLocation();
   }, [])
 
   useEffect(() => {
-    // getLocalRestaurants(coordinates.latitude, coordinates.longitude);
+    // getLocalRestaurants(coordinates.latitude, coordinates.longitude,city_id);
   }, [coordinates])
 
   function getLocation() {
@@ -48,7 +51,7 @@ export default function LocalRestaurants() {
     })
       .then(res => {
         setLocalRestaurants(res.data.restaurants)
-        console.log(res.data)
+        console.log("local resto",res.data)
       })
       .catch(err => console.log(err));
   }

@@ -21,7 +21,7 @@ export default function NavBar() {
 
   return (
     <div>
-      <Tabs>
+      <Tabs value="1">
         <Tab label="Login" style={NavStyle1} value="1" />
         <Tab label="Sign-up" style={NavStyle2} value="2" />
       </Tabs>

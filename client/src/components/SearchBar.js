@@ -1,28 +1,32 @@
 import React, { useState, useContext } from 'react';
+import { Row, Col } from 'react-bootstrap';
 import axios from "axios";
 import { InputAdornment, TextField, IconButton } from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import RoomIcon from '@material-ui/icons/Room';
 import { CityContext } from "../utils/CityContext";
+import { Typeahead } from 'react-bootstrap-typeahead';
 // import Select from 'react-select';
+import './locationCSS.css'
 
 export default function SearchBar(props) {
 
+  const [selectedCity, setSelectedCity] = useState([]);
   const { cityDetails, setCityDetails } = useContext(CityContext);
 
   const [location, setLocation] = useState('');
   const [searchKeyword, setSearchKeyword] = useState();
-  const [locationSuggestions, setLocationSuggestions] = useState([]);
+  const [locationSuggestions, setLocationSuggestions] = useState([{}]);
 
-  const searchLocationStyle = { backgroundColor: "white", width: "20%", marginBottom: "20px", border: "none" };
+  const searchLocationStyle = { backgroundColor: "white", marginBottom: "30px", border: "none" };
 
   const searchBarStyle = { backgroundColor: "white", width: "40%", marginBottom: "30px", border: "none" }
 
-  const locationOnChange = (e) => {
-    setLocation(e.target.value)
+  const locationOnChange = (location, e) => {
+    setLocation(location)
     getLocationSuggestions(location)
-    getCityId(location);
+    getCityId(selectedCity);
   }
 
   const SearchOnChange = (e) => {
@@ -62,58 +66,35 @@ export default function SearchBar(props) {
 
   return (
     <div>
-      <span>
-        {/* <Select
-          options={locationSuggestions}
-          value={location}
-          onClick={locationOnChange}
-        /> */}
+      <Typeahead
+        id="locationBox"
+        onChange={setSelectedCity}
+        onInputChange={locationOnChange}
+        labelKey={(option) => `${option.city_name}`}
+        options={locationSuggestions}
+        placeholder="Select city..."
+        selected={selectedCity}
+      />
 
-        <TextField
-          id="standard-half-width"
-          placeholder="Location"
-          value={props.location}
-          // options={locationSuggestions}
-          onChange={locationOnChange}
-          autoComplete="on"
-          variant="outlined"
-          style={searchLocationStyle}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <RoomIcon />
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton>
-                  <ArrowDropDownIcon />
-                </IconButton>
-              </InputAdornment>
-            )
-          }}
-        />
+      <TextField
+        id="standard-full-width"
+        placeholder="Search for a restaurant, cuisine or a dish"
+        value={searchKeyword}
+        onChange={SearchOnChange}
+        autoComplete="on"
+        variant="outlined"
+        style={searchBarStyle}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment>
+              <IconButton>
+                <SearchIcon />
+              </IconButton>
+            </InputAdornment>
+          )
+        }}
+      />
 
-        <TextField
-          id="standard-full-width"
-          placeholder="Search for a restaurant, cuisine or a dish"
-          value={searchKeyword}
-          onChange={SearchOnChange}
-          autoComplete="on"
-          variant="outlined"
-          style={searchBarStyle}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment>
-                <IconButton>
-                  <SearchIcon />
-                </IconButton>
-              </InputAdornment>
-            )
-          }}
-        />
-      </span>
-      {/* {console.log(location)} */}
-    </div>
+    </div >
   )
 }
